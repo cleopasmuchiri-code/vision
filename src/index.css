@@ -1,1 +1,57 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap");
+
+:root {
+  /* Brand */
+  --color-primary: #6d4aff;
+  --color-primary-hover: #5935e0;
+  --color-primary-light: #f3efff;
+
+  /* Light mode surfaces */
+  --color-bg: #faf9fc;
+  --color-surface: #ffffff;
+  --color-border: #e4def0;
+
+  /* Light mode text */
+  --color-text: #1b1523;
+  --color-text-muted: #6b6478;
+
+  /* Accent for streaks / completed goals */
+  --color-accent-warm: #e8a33d;
+}
+
+.dark {
+  --color-primary: #9b7fff;
+  --color-primary-hover: #b49cff;
+  --color-primary-light: #251e3b;
+
+  --color-bg: #14101c;
+  --color-surface: #1e1829;
+  --color-border: #2e2740;
+
+  --color-text: #f3effa;
+  --color-text-muted: #a79bc0;
+
+  --color-accent-warm: #f0b75c;
+}
+
+@theme {
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-primary-light: var(--color-primary-light);
+
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-border: var(--color-border);
+
+  --color-text: var(--color-text);
+  --color-text-muted: var(--color-text-muted);
+
+  --color-accent-warm: var(--color-accent-warm);
+
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
