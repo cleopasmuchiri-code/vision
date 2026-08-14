@@ -12,7 +12,7 @@ import MainLayout from "./components/MainLayout.jsx";
 const App = () => {
   return (
     <main className="flex justify-center items-center pb-8">
-      <div className="w-full lg:w-[60%]">
+      <div className="w-full">
         <Routes>
           {/* for errors */}
           <Route path="*" element={<NotFound />} />
