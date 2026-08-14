@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 const emptyFormData = {
   title: "",
-  target: 0,
+  target: "",
   targetDate: "",
-  quickDefault: 0,
+  quickDefault: "",
   memberIds: ["us1"],
 };
-const VisionForm = ({ selectedVision }) => {
+const VisionForm = ({ selectedVision, closeVisionModal }) => {
   const { createVision, editVision, currentUserId, users } = useApp();
   const [formData, setFormData] = useState(emptyFormData);
   const [usersVisible, setUsersVisible] = useState(false);
@@ -55,85 +55,146 @@ const VisionForm = ({ selectedVision }) => {
     navigate("/visions");
   }
 
-  console.log("user visible", usersVisible);
-
   function justMe() {
     setUsersVisible(false);
     setFormData((prev) => ({ ...prev, memberIds: [currentUserId] }));
   }
+
+  function toggleInviteFriends() {
+    setUsersVisible(true);
+    setFormData((prev) => ({ ...prev, memberIds: "" }));
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="">Title</label>
-      <input
-        onChange={handleChange}
-        value={formData.title}
-        name="title"
-        type="text"
-        required
-      />
-
-      <label htmlFor="">Target Amount</label>
-      <input
-        onChange={handleChange}
-        value={formData.target}
-        name="target"
-        type="number"
-      />
-
-      <label htmlFor="">Target Date</label>
-      <input
-        onChange={handleChange}
-        value={formData.targetDate}
-        name="targetDate"
-        type="date"
-      />
-
-      <label htmlFor="">Quick-add default</label>
-      <input
-        onChange={handleChange}
-        value={formData.quickDefault}
-        name="quickDefault"
-        type="number"
-      />
-
-      <label htmlFor="">Who is saving</label>
-      <button type="button" onClick={justMe}>
-        Just me
-      </button>
-      <button type="button" onClick={() => setUsersVisible(true)}>
-        Invite friends
-      </button>
-
-      {usersVisible && (
-        <div>
-          {users
-            .filter((user) => user.id !== currentUserId)
-            .map((user) => (
-              <button
-                type="button"
-                onClick={() =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    memberIds: prev.memberIds.includes(user.id)
-                      ? prev.memberIds.filter((id) => id !== user.id)
-                      : [...prev.memberIds, user.id],
-                  }))
-                }
-                style={{
-                  fontWeight: formData.memberIds.includes(user.id)
-                    ? "bold"
-                    : "normal",
-                }}
-                key={user.id}
-              >
-                {user.name}
-              </button>
-            ))}
+    <div className="flex flex-col gap-4">
+      <h2 className="text-2xl font-extrabold text-text">
+        {" "}
+        {selectedVision && selectedVision.id
+          ? "Edit vision"
+          : "Create vision"}{" "}
+      </h2>
+      <form
+        className="z-100  text-left bg-surface p-6 rounded-xl flex flex-col gap-4"
+        onSubmit={handleSubmit}
+      >
+        <div className="w-full ">
+          <label className="text-text-muted text-sm" htmlFor="">
+            Title
+          </label>
+          <input
+            onChange={handleChange}
+            value={formData.title}
+            name="title"
+            type="text"
+            required
+            className="mt-1 bg-bg w-full p-2 px-4 rounded-2xl text-text placeholder:text-text-muted border border-text-muted/40 focus:border-primary focus:outline-0"
+          />
         </div>
-      )}
+        <div className="w-full ">
+          <label className="text-text-muted text-sm" htmlFor="">
+            Target Amount
+          </label>
+          <input
+            onChange={handleChange}
+            value={formData.target}
+            name="target"
+            type="number"
+            required
+            className="mt-1 bg-bg w-full p-2 px-4 rounded-2xl text-text placeholder:text-text-muted border border-text-muted/40 focus:border-primary focus:outline-0"
+          />
+        </div>
+        <div className="w-full ">
+          <label className="text-text-muted text-sm" htmlFor="">
+            Target Date
+          </label>
+          <input
+            onChange={handleChange}
+            value={formData.targetDate}
+            name="targetDate"
+            type="date"
+            className="mt-1 bg-bg w-full p-2 px-4 rounded-2xl text-text placeholder:text-text-muted border border-text-muted/40 focus:border-primary focus:outline-0"
+          />
+        </div>
 
-      <button type="submit">Submit</button>
-    </form>
+        <div className="w-full ">
+          <label className="text-text-muted text-sm" htmlFor="">
+            Quick-add default
+          </label>
+          <input
+            onChange={handleChange}
+            value={formData.quickDefault}
+            name="quickDefault"
+            type="number"
+            className="my-1 bg-bg w-full p-2 px-4 rounded-2xl text-text placeholder:text-text-muted border border-text-muted/40 focus:border-primary focus:outline-0"
+          />
+          <p className="text-text-muted text-sm">
+            Optional — a one-tap amount on the vision page.
+          </p>
+        </div>
+
+        <label className="text-text-muted text-sm" htmlFor="">
+          Who is saving
+        </label>
+        <div className="flex gap-4">
+          <button
+            className={` ${formData.memberIds.includes(currentUserId) ? "font-semibold bg-primary text-primary-light" : "text-text-muted hover:bg-primary-light"} text-sm cursor-pointer flex justify-center items-center gap-3 px-3 py-1 border border-text-muted/30 rounded-full `}
+            type="button"
+            onClick={justMe}
+          >
+            Just me
+          </button>
+          <button
+            className={` ${usersVisible ? "font-semibold bg-primary text-primary-light" : "text-text-muted hover:bg-primary-light"} text-sm cursor-pointer flex justify-center items-center gap-3 px-3 py-1 border border-text-muted/30 rounded-full `}
+            type="button"
+            onClick={toggleInviteFriends}
+          >
+            Invite friends
+          </button>
+        </div>
+
+        {usersVisible && (
+          <div className="mb-4 flex flex-wrap gap-2">
+            {users
+              .filter((user) => user.id !== currentUserId)
+              .map((user) => (
+                <button
+                  className={` ${formData.memberIds.includes(user.id) ? "font-semibold bg-primary text-primary-light" : "text-text-muted hover:bg-primary-light"} text-sm cursor-pointer flex justify-center items-center gap-3 px-3 py-1 border border-text-muted/30 rounded-full `}
+                  type="button"
+                  onClick={() =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      memberIds: prev.memberIds.includes(user.id)
+                        ? prev.memberIds.filter((id) => id !== user.id)
+                        : [...prev.memberIds, user.id],
+                    }))
+                  }
+                  key={user.id}
+                >
+                  {user.name}
+                </button>
+              ))}
+          </div>
+        )}
+
+        <div className="flex justify-end gap-2 items-center">
+          <button
+            type="button"
+            onClick={closeVisionModal}
+            className="text-text cursor-pointer flex justify-center items-center gap-3 px-3 py-1 border border-text-muted/30 rounded-full hover:bg-primary-light"
+          >
+            Cancel
+          </button>
+          <button
+            className="cursor-pointer flex justify-center items-center gap-3 bg-primary hover:bg-primary-hover px-3 py-1 rounded-full"
+            type="submit"
+          >
+            {selectedVision && selectedVision.id
+              ? "Save Changes"
+              : "Create Vision"}
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

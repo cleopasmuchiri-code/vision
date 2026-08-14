@@ -6,7 +6,12 @@ const emptyFormData = {
   date: "",
 };
 
-const ContributionForm = ({ selectedContribution, visionId, quickDefault }) => {
+const ContributionForm = ({
+  closeContributionModal,
+  selectedContribution,
+  visionId,
+  quickDefault,
+}) => {
   const [formData, setFormData] = useState(emptyFormData);
   const { addContribution, editContribution, currentUserId } = useApp();
 
@@ -51,34 +56,56 @@ const ContributionForm = ({ selectedContribution, visionId, quickDefault }) => {
     }
 
     setFormData(emptyFormData);
+    closeContributionModal();
   }
 
   return (
-    <main className="h-full w-full bg-white/20">
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="">Amount</label>
+    <div className="z-1000 flex flex-col text-left gap-4 max-w-96 bg-surface p-6 rounded-xl">
+      <h2 className="font-extrabold text-text">Add Contributions</h2>
+
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+        <div className="w-full ">
+          <label className="text-text-muted" htmlFor="amount">
+            Amount
+          </label>
           <input
             onChange={handleChange}
             value={formData.amount}
             name="amount"
             type="number"
+            className="mt-1 bg-bg w-full p-2 px-4 rounded-2xl text-text placeholder:text-text-muted border border-text-muted/40 focus:border-primary focus:outline-0"
           />
         </div>
-        <div>
-          <label htmlFor="">Date</label>
+        <div className="w-full">
+          <label className="text-text-muted" htmlFor="date">
+            Date
+          </label>
           <input
             onChange={handleChange}
             value={formData.date}
             name="date"
             type="date"
+            className="mt-1 bg-bg w-full p-2 px-4 rounded-2xl text-text placeholder:text-text-muted border border-text-muted/40 focus:border-primary focus:outline-0"
           />
         </div>
-        <button type="submit">
-          {selectedContribution && selectedContribution.id ? "Save" : "Add"}
-        </button>
+
+        <div className="flex justify-end gap-2 items-center">
+          <button
+            type="button"
+            onClick={closeContributionModal}
+            className="text-text cursor-pointer flex justify-center items-center gap-3 px-3 py-1 border border-text-muted/30 rounded-full hover:bg-primary-light"
+          >
+            Cancel
+          </button>
+          <button
+            className="cursor-pointer flex justify-center items-center gap-3 bg-primary hover:bg-primary-hover px-3 py-1 rounded-full"
+            type="submit"
+          >
+            {selectedContribution && selectedContribution.id ? "Save" : "Add"}
+          </button>
+        </div>
       </form>
-    </main>
+    </div>
   );
 };
 

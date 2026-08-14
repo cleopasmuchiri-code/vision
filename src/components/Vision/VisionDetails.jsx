@@ -46,87 +46,129 @@ const VisionDetails = () => {
   console.log("Contribution", visionContributions);
 
   console.log("leaderboard is", leaderBoard);
+
+  function closeContributionModal() {
+    if (editContributionToggle) {
+      setEditContributionToggle(false);
+      setSelectedContribution({});
+    } else {
+      setAddCustomContribution(false);
+    }
+  }
+
+  function closeVisionModal() {
+    if (isEditing) {
+      setIsEditing(false);
+    }
+  }
   return (
-    <main className="flex flex-col gap-6">
-      <div>
-        <div className="flex text-text gap-1">
-          <h2 className="text-2xl font-extrabold text-text">{vision.title}</h2>
+    <>
+      {isEditing ? (
+        <VisionForm
+          closeVisionModal={closeVisionModal}
+          selectedVision={vision}
+        />
+      ) : (
+        <main className="flex flex-col gap-6">
+          <div>
+            <div className="flex text-text gap-1">
+              <h2 className="text-2xl font-extrabold text-text">
+                {vision.title}
+              </h2>
 
-          <button
-            className="cursor-pointer text-sm text-text-muted self-start"
-            onClick={() => setIsEditing(true)}
-          >
-            <Pencil size={15} />
-          </button>
-        </div>
+              <button
+                className="cursor-pointer text-sm text-text-muted self-start"
+                onClick={() => setIsEditing(true)}
+              >
+                <Pencil size={15} />
+              </button>
+            </div>
 
-        <div className="text-text-muted font-extralight text-sm">
-          <span>{memberBadge} people saving</span> · <span>{timeLeftText}</span>
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-2 px-6 py-5 bg-surface border border-text-muted/30 rounded-xl w-full">
-        <div className="flex justify-between items-baseline">
-          <h3 className="text-3xl font-bold text-text">
-            Ksh{totalContributed}
-          </h3>
-          <p className="text-text-muted">of Ksh{vision.targetAmount}</p>
-        </div>
-
-        <div className="pt-3">
-          <div className="mb-1 bg-primary-light w-full h-2 rounded-full overflow-hidden">
-            <div
-              className={`h-full transition-all duration-300 ${isCompleted ? "bg-accent-warm" : "bg-primary"}`}
-              style={{ width: `${percentage}%` }}
-            />
+            <div className="text-text-muted font-extralight text-sm">
+              <span>{memberBadge} people saving</span> ·{" "}
+              <span>{timeLeftText}</span>
+            </div>
           </div>
 
-          <span className="text-text-muted text-sm">
-            {!isCompleted
-              ? `${percentage}%  · Ksh${amountRemaining} to go`
-              : "Goal reached — nice work."}
-          </span>
-        </div>
+          <div className="flex flex-col gap-2 px-6 py-5 bg-surface border border-text-muted/30 rounded-xl w-full">
+            <div className="flex justify-between items-baseline">
+              <h3 className="text-3xl font-bold text-text">
+                Ksh{totalContributed}
+              </h3>
+              <p className="text-text-muted">of Ksh{vision.targetAmount}</p>
+            </div>
 
-        <div className="flex justify-start gap-2 ">
-          <QuickAddContribution
-            quickDefault={vision.quickDefault}
-            visionId={id}
-          />
+            <div className="pt-3">
+              <div className="mb-1 bg-primary-light w-full h-2 rounded-full overflow-hidden">
+                <div
+                  className={`h-full transition-all duration-300 ${isCompleted ? "bg-accent-warm" : "bg-primary"}`}
+                  style={{ width: `${percentage}%` }}
+                />
+              </div>
 
-          <button
-            className="cursor-pointer text-center text-text py-3 px-4  border border-text-muted/30 rounded-full hover:bg-primary-light"
-            onClick={() => setAddCustomContribution(true)}
-          >
-            Custom amount
-          </button>
-        </div>
-      </div>
+              <span className="text-text-muted text-sm">
+                {!isCompleted
+                  ? `${percentage}%  · Ksh${amountRemaining} to go`
+                  : "Goal reached — nice work."}
+              </span>
+            </div>
 
-      <div className="rounded-xl overflow-hidden shadow border border-text-muted/30">
-        {visionContributions.map((contribution) => (
-          <HistoryCard
-            key={contribution.id}
-            contribution={contribution}
-            editContributionToggle={handleSelectedContributionClick}
-          />
-        ))}
-      </div>
+            <div className="flex justify-start gap-2 ">
+              <QuickAddContribution
+                quickDefault={vision.quickDefault}
+                visionId={id}
+              />
 
-      {isEditing && <VisionForm selectedVision={vision} />}
+              <button
+                className="cursor-pointer text-center text-text py-3 px-4  border border-text-muted/30 rounded-full hover:bg-primary-light"
+                onClick={() => setAddCustomContribution(true)}
+              >
+                Custom amount
+              </button>
+            </div>
+          </div>
 
-      {addCustomContribution && (
-        <ContributionForm visionId={id} quickDefault={vision.quickDefault} />
+          <div className="rounded-xl overflow-hidden shadow border border-text-muted/30">
+            {visionContributions.map((contribution) => (
+              <HistoryCard
+                key={contribution.id}
+                contribution={contribution}
+                editContributionToggle={handleSelectedContributionClick}
+              />
+            ))}
+          </div>
+
+          {addCustomContribution && (
+            <div className="fixed inset-0 z-10 grid place-items-center h-screen w-screen bg-white/10 ">
+              <div
+                onClick={closeContributionModal}
+                className="absolute inset-0 w-full h-full  bg-white/20"
+              ></div>
+              <ContributionForm
+                closeContributionModal={closeContributionModal}
+                visionId={id}
+                quickDefault={vision.quickDefault}
+              />
+            </div>
+          )}
+
+          {editContributionToggle && (
+            <div className="fixed inset-0 z-10 grid place-items-center h-screen w-screen bg-white/10">
+              <div
+                onClick={closeContributionModal}
+                className="absolute inset-0 w-full h-full bg-white/20"
+              ></div>
+              <ContributionForm
+                closeContributionModal={closeContributionModal}
+                selectedContribution={selectedContribution}
+                visionId={id}
+                quickDefault={vision.quickDefault}
+              />
+            </div>
+          )}
+        </main>
       )}
-
-      {editContributionToggle && (
-        <ContributionForm
-          selectedContribution={selectedContribution}
-          visionId={id}
-          quickDefault={vision.quickDefault}
-        />
-      )}
-    </main>
+    </>
   );
 };
 
