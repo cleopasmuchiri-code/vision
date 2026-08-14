@@ -12,6 +12,7 @@ export const seedData = {
       targetAmount: 20000,
       targetDate: "2026-09-30",
       memberIds: ["u1"],
+      quickDefault: 100,
     },
     {
       id: "v2",
@@ -19,6 +20,7 @@ export const seedData = {
       targetAmount: 40000,
       targetDate: null,
       memberIds: ["u1", "u2", "u3"],
+      quickDefault: 100,
     },
     {
       id: "v3",
@@ -26,6 +28,7 @@ export const seedData = {
       targetAmount: 15000,
       targetDate: null,
       memberIds: ["u2"],
+      quickDefault: 100,
     },
     {
       id: "v4",
@@ -33,6 +36,7 @@ export const seedData = {
       targetAmount: 60000,
       targetDate: "2026-12-01",
       memberIds: ["u3"],
+      quickDefault: 100,
     },
     {
       id: "v5",
@@ -40,6 +44,7 @@ export const seedData = {
       targetAmount: 5000,
       targetDate: "2026-08-20",
       memberIds: ["u1", "u3"],
+      quickDefault: 100,
     },
     {
       id: "v6",
@@ -47,6 +52,7 @@ export const seedData = {
       targetAmount: 10000,
       targetDate: null,
       memberIds: ["u2"],
+      quickDefault: 100,
     },
   ],
 

@@ -1,22 +1,30 @@
-import React from "react";
+import { useApp } from "../context/AppContext";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const { currentUserId, users } = useApp();
+
+  const user = users.find((user) => user.id === currentUserId);
+  const initials = user.name
+    .split(" ")
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
   return (
-    <nav>
+    <nav className="flex justify-between items-center">
       {/* logo */}
       <div className="">Vision</div>
 
       {/* app navigation */}
-      <div className="">
-        <ul>
-          <li>Dashboard</li>
-          <li>Visions</li>
-          <li>History</li>
-        </ul>
+      <div className="flex justify-center items-center gap-4">
+        <Link to="/">Dashboard</Link>
+        <Link to="/visions">Visions</Link>
+        <Link to="/history">History</Link>
+
+        <div className="">{initials}</div>
       </div>
 
       {/* profile */}
-      <div className=""></div>
     </nav>
   );
 };

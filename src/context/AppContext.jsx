@@ -1,10 +1,23 @@
-import { useContext, createContext } from "react";
+import { useContext, createContext, useEffect } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { seedData } from "../data/seedData";
 
 const AppContext = createContext(undefined);
 
 export function AppProvider({ children }) {
+  // themes
+  const [theme, setTheme] = useLocalStorage("theme", "light");
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+  }, [theme]);
+
+  // function to toggle theme
+
+  function toggleTheme() {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  }
+
   // set user
   const [users] = useLocalStorage("users", seedData.users);
 
@@ -59,6 +72,8 @@ export function AppProvider({ children }) {
   return (
     <AppContext.Provider
       value={{
+        theme,
+        toggleTheme,
         users,
         currentUser,
         currentUserId,

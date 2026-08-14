@@ -1,6 +1,6 @@
 import { useApp } from "../context/AppContext";
 const Profile = () => {
-  const { currentUser, currentUserId, visions } = useApp();
+  const { currentUser, currentUserId, visions, theme, toggleTheme } = useApp();
 
   const usersVisions = visions.filter((vision) =>
     vision.memberIds.includes(currentUserId),
@@ -18,6 +18,12 @@ const Profile = () => {
         ))}
         Total Vision
         {totalVisions}
+      </div>
+
+      <div>
+        <button onClick={toggleTheme}>
+          {theme === "light" ? "Switch to dark" : "Switch to light"}
+        </button>
       </div>
     </main>
   );

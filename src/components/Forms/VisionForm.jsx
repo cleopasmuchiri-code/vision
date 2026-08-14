@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
 import { useApp } from "../../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 const emptyFormData = {
   title: "",
   target: 0,
   targetDate: "",
   quickDefault: 0,
-  whoIsSaving: ["us1"],
+  memberIds: ["us1"],
 };
 const VisionForm = ({ selectedVision }) => {
   const { createVision, editVision, currentUserId, users } = useApp();
   const [formData, setFormData] = useState(emptyFormData);
   const [usersVisible, setUsersVisible] = useState(false);
 
+  const navigate = useNavigate();
   useEffect(() => {
     if (selectedVision) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -21,7 +23,7 @@ const VisionForm = ({ selectedVision }) => {
         target: selectedVision.target || "",
         targetDate: selectedVision.targetDate || "",
         quickDefault: selectedVision.quickDefault || "",
-        whoIsSaving: selectedVision.membersIds || [currentUserId],
+        memberIds: selectedVision.membersIds || [currentUserId],
       });
     } else {
       setFormData(emptyFormData);
@@ -48,13 +50,16 @@ const VisionForm = ({ selectedVision }) => {
 
     console.log("form data is", formData);
     setFormData(emptyFormData);
+
+    // navigate back to visions
+    navigate("/visions");
   }
 
   console.log("user visible", usersVisible);
 
   function justMe() {
     setUsersVisible(false);
-    setFormData((prev) => ({ ...prev, whoIsSaving: [currentUserId] }));
+    setFormData((prev) => ({ ...prev, memberIds: [currentUserId] }));
   }
   return (
     <form onSubmit={handleSubmit}>
@@ -109,13 +114,13 @@ const VisionForm = ({ selectedVision }) => {
                 onClick={() =>
                   setFormData((prev) => ({
                     ...prev,
-                    whoIsSaving: prev.whoIsSaving.includes(user.id)
-                      ? prev.whoIsSaving.filter((id) => id !== user.id)
-                      : [...prev.whoIsSaving, user.id],
+                    memberIds: prev.memberIds.includes(user.id)
+                      ? prev.memberIds.filter((id) => id !== user.id)
+                      : [...prev.memberIds, user.id],
                   }))
                 }
                 style={{
-                  fontWeight: formData.whoIsSaving.includes(user.id)
+                  fontWeight: formData.memberIds.includes(user.id)
                     ? "bold"
                     : "normal",
                 }}
