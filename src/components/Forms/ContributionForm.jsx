@@ -54,27 +54,31 @@ const ContributionForm = ({ selectedContribution, visionId, quickDefault }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="">Amount</label>
-      <input
-        onChange={handleChange}
-        value={formData.amount}
-        name="amount"
-        type="number"
-      />
-
-      <label htmlFor="">Date</label>
-      <input
-        onChange={handleChange}
-        value={formData.date}
-        name="date"
-        type="date"
-      />
-
-      <button type="submit">
-        {selectedContribution && selectedContribution.id ? "Save" : "Add"}
-      </button>
-    </form>
+    <main className="h-full w-full bg-white/20">
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="">Amount</label>
+          <input
+            onChange={handleChange}
+            value={formData.amount}
+            name="amount"
+            type="number"
+          />
+        </div>
+        <div>
+          <label htmlFor="">Date</label>
+          <input
+            onChange={handleChange}
+            value={formData.date}
+            name="date"
+            type="date"
+          />
+        </div>
+        <button type="submit">
+          {selectedContribution && selectedContribution.id ? "Save" : "Add"}
+        </button>
+      </form>
+    </main>
   );
 };
 

@@ -12,26 +12,28 @@ import MainLayout from "./components/MainLayout.jsx";
 
 const App = () => {
   return (
-    <main className="px-8 bg-">
-      <Routes>
-        {/* for errors */}
-        <Route path="*" element={<NotFound />} />
+    <main className="flex justify-center items-center pb-8">
+      <div className="w-full lg:w-[60%]">
+        <Routes>
+          {/* for errors */}
+          <Route path="*" element={<NotFound />} />
 
-        {/* app routes */}
+          {/* app routes */}
 
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<LandingPage />} />
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<LandingPage />} />
 
-          <Route path="/history" element={<History />} />
-          <Route path="/profile" element={<Profile />} />
+            <Route path="/history" element={<History />} />
+            <Route path="/profile" element={<Profile />} />
 
-          <Route path="/visions">
-            <Route index element={<Visions />} />
-            <Route path="add" element={<VisionForm />} />
-            <Route path=":id" element={<VisionDetail />} />
+            <Route path="/visions">
+              <Route index element={<Visions />} />
+              <Route path="add" element={<VisionForm />} />
+              <Route path=":id" element={<VisionDetail />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
+        </Routes>
+      </div>
     </main>
   );
 };

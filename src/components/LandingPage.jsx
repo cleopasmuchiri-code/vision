@@ -6,6 +6,7 @@ import {
 import VisionCard from "./Vision/VisionCard";
 import { getVisionProgress } from "../utils/getVisionProgress";
 import { Link } from "react-router-dom";
+
 const LandingPage = () => {
   const { currentUserId, contributions, visions } = useApp();
 
@@ -31,38 +32,45 @@ const LandingPage = () => {
   const streak = calculateStreak(dates);
 
   return (
-    <main className="bg-bg">
-      <div>
-        <div>
-          <p>Total saved</p>
-          Ksh{total}
+    <main className="flex flex-col gap-8">
+      <div className="flex justify-between items-center">
+        <div className=" text-text">
+          <p className="text-sm text-text-muted">Total saved</p>
+          <h2 className="text-4xl font-extrabold text-text">Ksh {total}</h2>
         </div>
 
-        <button>
-          <Link to="/visions/add">+ New vision</Link>
-        </button>
+        <Link to="/visions/add" className="text-center text-primary-light ">
+          <button className="cursor-pointer flex justify-center items-center gap-3 bg-primary hover:bg-primary-hover px-4 py-3 rounded-full">
+            <p>+</p>
+            <p className="font-bold">New Vision</p>
+          </button>
+        </Link>
+      </div>
+
+      <div className="flex justify-between items-center gap-8">
+        <div className="px-3 py-5 bg-surface border border-text-muted/30 rounded-xl w-full ">
+          <p className="text-sm text-primary">Active vision</p>
+          <h3 className="text-2xl font-bold text-text">
+            {activeVisions.length}
+          </h3>
+        </div>
+        <div className="px-3 py-5 bg-surface border border-text-muted/30 rounded-xl w-full ">
+          <p className="text-sm text-primary">Savings Streak</p>
+          <h3 className="text-2xl font-bold text-text">{streak} days</h3>
+        </div>
       </div>
 
       <div>
-        <div>
-          <p>active vision</p>
-          <p>{activeVisions.length}</p>
-        </div>
-        <div>
-          <p>Savings Streak</p>
-          <p>{streak}</p>
-        </div>
-      </div>
+        <div className="pb-2 flex justify-between items-center">
+          <div className="text-text font-bold">
+            <p>In Progress</p>
+          </div>
 
-      <div>
-        <div>
-          <p>In Progress</p>
+          <button className="text-primary hover:underline text-sm">
+            <Link to="/visions">View All</Link>
+          </button>
         </div>
-
-        <button>
-          <Link to="/visions">View All</Link>
-        </button>
-        <div>
+        <div className="flex flex-col gap-4">
           {activeVisions.slice(0, 3).map((vision) => (
             <VisionCard key={vision.id} vision={vision} />
           ))}

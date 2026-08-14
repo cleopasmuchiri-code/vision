@@ -16,7 +16,14 @@ const QuickAddContribution = ({ quickDefault, visionId }) => {
     });
   }
 
-  return <button onClick={handleQuickAdd}>+ Add Ksh {quickDefault}</button>;
+  return (
+    <button
+      className="cursor-pointer flex justify-center items-center gap-3 bg-primary hover:bg-primary-hover px-4 py-3 rounded-full"
+      onClick={handleQuickAdd}
+    >
+      + Add Ksh {quickDefault}
+    </button>
+  );
 };
 
 export default QuickAddContribution;

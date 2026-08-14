@@ -35,26 +35,32 @@ const Visions = () => {
   ];
 
   return (
-    <main className="visions-container">
-      <div>
-        <h2>All Visions</h2>
-        <button>
-          <Link to="/visions/add">+ New vision</Link>
-        </button>
+    <main className="">
+      <div className="flex justify-between items-center">
+        <div className=" text-text">
+          <h2 className="text-2xl font-extrabold text-text">All Visions</h2>
+        </div>
+
+        <Link to="/visions/add" className="text-center text-primary-light ">
+          <button className="cursor-pointer flex justify-center items-center gap-3 bg-primary hover:bg-primary-hover px-3 py-1 rounded-full">
+            <p>+</p>
+            <p className="font-semibold">New</p>
+          </button>
+        </Link>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex justify-center items-center gap-2 overflow-x-scroll my-4">
+      <div className="flex justify-start items-center gap-2 my-4">
         {tabs.map((tab) => {
           const isActive = filter === tab.id;
           return (
             <button
               key={tab.id}
               onClick={() => setFilter(tab.id)}
-              className={`cursor-pointer transition-all duration-200 hover:scale-95 px-4 py-1 rounded-full text-sm font-medium ${
+              className={`border text-sm font-medium border-text-muted/30 cursor-pointer transition-all duration-200 hover:scale-95 px-4 py-1 rounded-full ${
                 isActive
-                  ? "bg-black text-white"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                  ? "bg-primary text-primary-light"
+                  : "bg-surface text-text-muted  "
               }`}
             >
               {tab.label}
@@ -64,7 +70,7 @@ const Visions = () => {
       </div>
 
       {/* Grid of Filtered Visions */}
-      <div className="visions-grid">
+      <div className="flex flex-col justify-center gap-4">
         {filteredVisions.length === 0 ? (
           <p className="text-center text-gray-500 my-8">
             No {filter} visions to display.

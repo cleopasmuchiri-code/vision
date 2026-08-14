@@ -8,12 +8,12 @@ export function AppProvider({ children }) {
   // themes
   const [theme, setTheme] = useLocalStorage("theme", "light");
 
+  // toggle theme in HTML
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
   }, [theme]);
 
-  // function to toggle theme
-
+  // function to toggle theme - in react
   function toggleTheme() {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   }

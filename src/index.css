@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap");
-
 :root {
   /* Brand */
   --color-primary: #6d4aff;
@@ -57,7 +55,4 @@
 body {
   font-family: "Plus Jakarta Sans", sans-serif;
   background-color: var(--color-bg);
-}
-p {
-  color: var(--color-primary);
 }

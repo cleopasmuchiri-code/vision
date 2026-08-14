@@ -9,7 +9,6 @@ const VisionCard = ({ vision }) => {
     totalContributed,
     isCompleted,
     percentage,
-    amountRemaining,
     timeLeftText,
     memberBadge,
   } = getVisionProgress(vision, contributions);
@@ -17,39 +16,44 @@ const VisionCard = ({ vision }) => {
   return (
     <>
       <Link to={`/visions/${vision.id}`}>
-        <div className="vision-card">
-          <div className="card-header">
-            <h3>{vision.title}</h3>
-            <span className="member-tag">{memberBadge}</span>
-          </div>
-          <div className="status-row">
-            {isCompleted ? (
-              <span className="badge completed-badge">Completed 🎉</span>
-            ) : (
-              <span className="time-left">⏳ {timeLeftText}</span>
-            )}
-          </div>
-          <div className="amount-row">
-            <span className="amount-progress">
-              Ksh {totalContributed.toLocaleString()} / Ksh{" "}
-              {vision.targetAmount.toLocaleString()}
+        <div
+          className={`bg-surface rounded-xl p-4 shadow border border-transparent ${isCompleted ? "hover:border-accent-warm" : "hover:border-primary"} transition-all duration-200`}
+        >
+          <div className="flex justify-between items-center">
+            <h3 className="text-text font-bold ">{vision.title}</h3>
+            <span
+              className={`text-xs  py-1 px-3 text-center rounded-full font-bold ${isCompleted ? "text-accent-warm bg-accent-warm/20" : "bg-primary/10 text-primary"}`}
+            >
+              {isCompleted ? "Completed" : percentage}%
             </span>
-            <span className="percentage-text">{percentage}%</span>
           </div>
-          <div className="bg-gray-200 w-full h-3 rounded-full overflow-hidden">
-            <div
-              className={`h-full transition-all duration-300 ${isCompleted ? "bg-green-600" : "bg-black"}`}
-              style={{ width: `${percentage}%` }}
-            />
+
+          <div className="text-text-muted text-sm">
+            <span className="">{memberBadge} saving</span>
+            <span className="pl-1">
+              {" "}
+              {isCompleted ? "" : `· ${timeLeftText}`}
+            </span>
           </div>
-          <div className="card-footer">
-            {isCompleted ? (
-              <p className="success-text">Goal Reached!</p>
-            ) : (
-              <p className="remaining-text">
-                Ksh {amountRemaining.toLocaleString()} remaining
-              </p>
-            )}
+
+          <div className="pt-3 pb-1">
+            <div className="bg-primary-light w-full h-2 rounded-full overflow-hidden">
+              <div
+                className={`h-full transition-all duration-300 ${isCompleted ? "bg-accent-warm" : "bg-primary"}`}
+                style={{ width: `${percentage}%` }}
+              />
+            </div>
+          </div>
+
+          <div className="amount-row">
+            <span className="amount-progress text-sm">
+              <span className="text-text font-semibold">
+                Ksh {totalContributed.toLocaleString()}
+              </span>{" "}
+              <span className="text-text-muted font-light">
+                of Ksh {vision.targetAmount.toLocaleString()}
+              </span>
+            </span>
           </div>
         </div>
       </Link>

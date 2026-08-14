@@ -21,7 +21,7 @@ export function getVisionProgress(vision, contributions) {
   }
 
   const memberCount = vision.memberIds.length;
-  const memberBadge = memberCount === 1 ? "Just You" : `${memberCount} saving`;
+  const memberBadge = memberCount === 1 ? "Just Me" : `${memberCount}`;
 
   return {
     totalContributed,

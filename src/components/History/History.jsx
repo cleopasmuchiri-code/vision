@@ -17,17 +17,22 @@ const History = () => {
   return (
     <main>
       {historyContributions.length === 0 ? (
-        <p>No contributions found</p>
+        <p className="text-primary">No contributions found</p>
       ) : (
-        <div className="history-list">
+        <div className="flex flex-col justify-center gap-4">
           <div>
-            <h1>History</h1>
-            <p>
-              {historyContributions.length} contributions across all visions
-            </p>
+            <div className=" text-text">
+              <h2 className="text-2xl font-extrabold text-text">
+                History List
+              </h2>
+
+              <p className="text-sm text-text-muted">
+                {historyContributions.length} contributions across all visions
+              </p>
+            </div>
           </div>
 
-          <div>
+          <div className="rounded-xl overflow-hidden shadow border border-text-muted/30">
             {historyContributions.map((contribution) => {
               return (
                 <HistoryCard
