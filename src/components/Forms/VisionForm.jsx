@@ -180,12 +180,12 @@ const VisionForm = ({ selectedVision, closeVisionModal }) => {
           <button
             type="button"
             onClick={closeVisionModal}
-            className="text-text cursor-pointer flex justify-center items-center gap-3 px-3 py-1 border border-text-muted/30 rounded-full hover:bg-primary-light"
+            className="font-semibold text-text cursor-pointer flex justify-center items-center gap-3 px-4 py-2 border border-text-muted/30 rounded-full hover:bg-primary-light"
           >
             Cancel
           </button>
           <button
-            className="cursor-pointer flex justify-center items-center gap-3 bg-primary hover:bg-primary-hover px-3 py-1 rounded-full"
+            className="font-semibold cursor-pointer flex justify-center items-center gap-3 bg-primary hover:bg-primary-hover px-4 py-2 rounded-full"
             type="submit"
           >
             {selectedVision && selectedVision.id

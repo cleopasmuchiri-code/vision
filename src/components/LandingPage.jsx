@@ -6,6 +6,7 @@ import {
 import VisionCard from "./Vision/VisionCard";
 import { getVisionProgress } from "../utils/getVisionProgress";
 import { Link } from "react-router-dom";
+import { Flame } from "lucide-react";
 
 const LandingPage = () => {
   const { currentUserId, contributions, visions } = useApp();
@@ -54,9 +55,12 @@ const LandingPage = () => {
             {activeVisions.length}
           </h3>
         </div>
-        <div className="px-3 py-5 bg-surface border border-text-muted/30 rounded-xl w-full ">
-          <p className="text-sm text-primary">Savings Streak</p>
-          <h3 className="text-2xl font-bold text-text">{streak} days</h3>
+        <div className="text-accent-warm flex gap-2 items-center px-3 py-5 bg-surface border border-text-muted/30 rounded-xl w-full ">
+          <Flame />
+          <div>
+            <p className="text-sm text-primary">Savings Streak</p>
+            <h3 className="text-2xl font-bold text-text">{streak} days</h3>
+          </div>
         </div>
       </div>
 

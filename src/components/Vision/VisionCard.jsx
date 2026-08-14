@@ -29,7 +29,9 @@ const VisionCard = ({ vision }) => {
           </div>
 
           <div className="text-text-muted text-sm">
-            <span className="">{memberBadge} saving</span>
+            <span className="">
+              {memberBadge} {memberBadge !== "Just Me" ? "saving" : ""}
+            </span>
             <span className="pl-1">
               {" "}
               {isCompleted ? "" : `· ${timeLeftText}`}

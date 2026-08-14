@@ -1,6 +1,7 @@
 import { useApp } from "../context/AppContext";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { getUserInitials } from "../utils/getUserInitials";
 
 const Navbar = () => {
   const { currentUserId, users } = useApp();
@@ -23,12 +24,7 @@ const Navbar = () => {
     },
   ];
 
-  const user = users.find((user) => user.id === currentUserId);
-  const initials = user.name
-    .split(" ")
-    .map((word) => word[0])
-    .join("")
-    .toUpperCase();
+  const initials = getUserInitials(users, currentUserId);
   return (
     <nav className="text-text-muted border-b border-b-text-muted/30  flex justify-between items-center w-full pt-4 pb-5 px-4">
       {/* logo */}

@@ -3,7 +3,6 @@ import Visions from "./components/Vision/Visions.jsx";
 import Profile from "./components/Profile";
 import LandingPage from "./components/LandingPage";
 import History from "./components/History/History.jsx";
-import VisionForm from "./components/Forms/VisionForm";
 import VisionDetail from "./components/Vision/VisionDetails";
 import NotFound from "./components/NotFound.jsx";
 
@@ -28,7 +27,6 @@ const App = () => {
 
             <Route path="/visions">
               <Route index element={<Visions />} />
-              <Route path="add" element={<VisionForm />} />
               <Route path=":id" element={<VisionDetail />} />
             </Route>
           </Route>
