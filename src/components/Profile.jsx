@@ -101,7 +101,7 @@ const Profile = () => {
         </button>
       </div>
 
-      <div>
+      <div className="mt-10">
         <div className="pb-2 flex justify-between items-center">
           <div className="text-text font-bold">
             <p>In Progress</p>
