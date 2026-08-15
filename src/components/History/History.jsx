@@ -9,6 +9,8 @@ const History = () => {
     .filter((vision) => vision.memberIds.includes(currentUserId))
     .map((vision) => vision.id);
 
+  ["vision1", "vision2", "vision3"];
+
   // 2. Filter contributions belonging to those visions and sort by date (newest first)
   const historyContributions = contributions
     .filter((contribution) => userVisionIds.includes(contribution.visionId))

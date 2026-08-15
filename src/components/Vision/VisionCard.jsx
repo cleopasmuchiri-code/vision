@@ -47,14 +47,18 @@ const VisionCard = ({ vision }) => {
             </div>
           </div>
 
-          <div className="amount-row">
-            <span className="amount-progress text-sm">
+          <div className="flex justify-between items-end">
+            <span className=" text-sm">
               <span className="text-text font-semibold">
                 Ksh {totalContributed.toLocaleString()}
               </span>{" "}
               <span className="text-text-muted font-light">
                 of Ksh {vision.targetAmount.toLocaleString()}
               </span>
+            </span>
+
+            <span className="text-text-muted font-light text-xs">
+              {vision.createdAt}
             </span>
           </div>
         </div>

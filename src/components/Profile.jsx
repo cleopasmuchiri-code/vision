@@ -4,6 +4,7 @@ import { getUserInitials } from "../utils/getUserInitials";
 import {
   calculateStreak,
   getUserContributionDates,
+  getSortedDates,
 } from "../utils/landingHelpers";
 import { getVisionProgress } from "../utils/getVisionProgress";
 import VisionCard from "./Vision/VisionCard";
@@ -44,7 +45,10 @@ const Profile = () => {
   const streak = calculateStreak(dates);
 
   // start date
-  const startDate = dates[0];
+
+  const sortedDates = getSortedDates(dates);
+  const startDate = sortedDates[sortedDates.length - 1];
+
   return (
     <main className="flex flex-col gap-6">
       <h2 className="text-2xl font-extrabold text-text">Profile</h2>

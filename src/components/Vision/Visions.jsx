@@ -4,6 +4,7 @@ import VisionCard from "./VisionCard";
 import { getVisionProgress } from "../../utils/getVisionProgress";
 import { useLocation, useNavigate } from "react-router-dom";
 import VisionForm from "../Forms/VisionForm";
+import { getSortedVisions } from "../../utils/landingHelpers";
 
 const Visions = () => {
   const location = useLocation();
@@ -37,10 +38,7 @@ const Visions = () => {
     return true; // "all"
   });
 
-  console.log("visions are", filter, filteredVisions);
-  if (userVisions.length === 0) {
-    return <div>No visions found</div>;
-  }
+  const sortedVisions = getSortedVisions(filteredVisions);
 
   const tabs = [
     { id: "all", label: "All" },
@@ -94,12 +92,12 @@ const Visions = () => {
 
           {/* Grid of Filtered Visions */}
           <div className="flex flex-col justify-center gap-4">
-            {filteredVisions.length === 0 ? (
+            {sortedVisions.length === 0 ? (
               <p className="text-center text-primary my-8">
                 No {filter} visions to display.
               </p>
             ) : (
-              filteredVisions.map((vision) => (
+              sortedVisions.map((vision) => (
                 <VisionCard key={vision.id} vision={vision} />
               ))
             )}

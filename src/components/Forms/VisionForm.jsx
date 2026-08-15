@@ -1,17 +1,41 @@
 import { useState, useEffect } from "react";
 import { useApp } from "../../context/AppContext";
 
+// date today
+const today = new Date().toISOString().split("T")[0];
+
 const emptyFormData = {
   title: "",
   targetAmount: "",
   targetDate: "",
   quickDefault: "",
   memberIds: [],
+  createdAt: today,
 };
+
 const VisionForm = ({ selectedVision, closeVisionModal }) => {
   const { createVision, editVision, currentUserId, users } = useApp();
-  const [formData, setFormData] = useState(emptyFormData);
+  const [formData, setFormData] = useState({
+    ...emptyFormData,
+    memberIds: [currentUserId],
+  });
   const [usersVisible, setUsersVisible] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  function validate() {
+    const newErrors = {};
+
+    if (Number(formData.quickDefault) > Number(formData.targetAmount)) {
+      newErrors.quickDefault =
+        "Quick-add amount can't exceed the target  amount";
+    }
+
+    if (formData.targetDate && formData.targetDate < today) {
+      newErrors.targetDate = "Target date can't be in the past.";
+    }
+
+    return newErrors;
+  }
 
   useEffect(() => {
     if (selectedVision) {
@@ -24,7 +48,7 @@ const VisionForm = ({ selectedVision, closeVisionModal }) => {
         memberIds: selectedVision.memberIds || [currentUserId],
       });
     } else {
-      setFormData(emptyFormData);
+      setFormData({ ...emptyFormData, memberIds: [currentUserId] });
     }
   }, [selectedVision, currentUserId]);
 
@@ -40,14 +64,24 @@ const VisionForm = ({ selectedVision, closeVisionModal }) => {
   function handleSubmit(e) {
     e.preventDefault();
 
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    setErrors({});
+
+    const memberIds = [...new Set([currentUserId, ...formData.memberIds])];
+    const payload = { ...formData, memberIds };
+
     if (selectedVision && selectedVision.id) {
-      editVision({ ...formData, id: selectedVision.id });
+      editVision({ ...payload, id: selectedVision.id });
     } else {
-      createVision({ ...formData, id: crypto.randomUUID() });
+      createVision({ ...payload, id: crypto.randomUUID() });
     }
 
-    setFormData(emptyFormData);
-    closeVisionModal(); // instead of navigate("/visions")
+    setFormData({ ...emptyFormData, memberIds: [currentUserId] });
+    closeVisionModal();
   }
 
   function justMe() {
@@ -57,7 +91,12 @@ const VisionForm = ({ selectedVision, closeVisionModal }) => {
 
   function toggleInviteFriends() {
     setUsersVisible(true);
-    setFormData((prev) => ({ ...prev, memberIds: "" }));
+    setFormData((prev) => ({
+      ...prev,
+      memberIds: prev.memberIds.includes(currentUserId)
+        ? prev.memberIds
+        : [...prev.memberIds, currentUserId],
+    }));
   }
 
   return (
@@ -109,9 +148,13 @@ const VisionForm = ({ selectedVision, closeVisionModal }) => {
             value={formData.targetDate}
             name="targetDate"
             type="date"
+            min={new Date().toISOString().split("T")[0]}
             placeholder="11/20/2026"
             className="mt-1 bg-bg w-full p-2 px-4 rounded-2xl text-text placeholder:text-text-muted border border-text-muted/40 focus:border-primary focus:outline-0"
           />
+          {errors.targetDate && (
+            <p className="text-red-500 text-sm mt-1">{errors.targetDate}</p>
+          )}
         </div>
 
         <div className="w-full ">
@@ -124,11 +167,16 @@ const VisionForm = ({ selectedVision, closeVisionModal }) => {
             name="quickDefault"
             type="number"
             placeholder="1500"
+            max={formData.targetAmount || undefined}
             className="my-1 bg-bg w-full p-2 px-4 rounded-2xl text-text placeholder:text-text-muted border border-text-muted/40 focus:border-primary focus:outline-0"
           />
-          <p className="text-text-muted text-sm">
-            Optional — a one-tap amount on the vision page.
-          </p>
+          {errors.quickDefault ? (
+            <p className="text-red-500 text-sm mt-1">{errors.quickDefault}</p>
+          ) : (
+            <p className="text-text-muted text-sm">
+              Optional — makes adding contribution easier
+            </p>
+          )}
         </div>
 
         <label className="text-text-muted text-sm" htmlFor="">
@@ -184,7 +232,7 @@ const VisionForm = ({ selectedVision, closeVisionModal }) => {
             Cancel
           </button>
           <button
-            className="font-semibold cursor-pointer flex justify-center items-center gap-3 bg-primary hover:bg-primary-hover px-4 py-2 rounded-full"
+            className="text-primary-light font-semibold cursor-pointer flex justify-center items-center gap-3 bg-primary hover:bg-primary-hover px-4 py-2 rounded-full"
             type="submit"
           >
             {selectedVision && selectedVision.id

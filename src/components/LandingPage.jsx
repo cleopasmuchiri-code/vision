@@ -2,6 +2,7 @@ import { useApp } from "../context/AppContext";
 import {
   calculateStreak,
   getUserContributionDates,
+  getSortedVisions,
 } from "../utils/landingHelpers";
 import VisionCard from "./Vision/VisionCard";
 import { getVisionProgress } from "../utils/getVisionProgress";
@@ -33,6 +34,7 @@ const LandingPage = () => {
     .filter((v) => v.memberIds.includes(currentUserId))
     .filter((v) => !getVisionProgress(v, contributions).isCompleted);
 
+  const sortedVisions = getSortedVisions(activeVisions);
   // get array of the contribution dates
   const dates = getUserContributionDates(contributions);
 
@@ -60,7 +62,7 @@ const LandingPage = () => {
         <div className="px-3 py-5 bg-surface border border-text-muted/30 rounded-xl w-full ">
           <p className="text-sm text-primary">Active vision</p>
           <h3 className="text-2xl font-bold text-text">
-            {activeVisions.length}
+            {sortedVisions.length}
           </h3>
         </div>
         <div className="text-accent-warm flex gap-2 items-center px-3 py-5 bg-surface border border-text-muted/30 rounded-xl w-full ">
@@ -83,7 +85,7 @@ const LandingPage = () => {
           </button>
         </div>
         <div className="flex flex-col gap-4">
-          {activeVisions.slice(0, 3).map((vision) => (
+          {sortedVisions.slice(0, 3).map((vision) => (
             <VisionCard key={vision.id} vision={vision} />
           ))}
         </div>

@@ -14,6 +14,7 @@ export const seedData = {
       title: "New phone",
       targetAmount: 12000, // Contributed: 12,000 (100%)
       targetDate: "2026-09-30",
+      createdAt: "2026-07-15",
       memberIds: ["u1"],
       quickDefault: 100,
     },
@@ -22,6 +23,7 @@ export const seedData = {
       title: "Birthday gift for Mary",
       targetAmount: 5000, // Contributed: 5,000 (100%)
       targetDate: "2026-08-20",
+      createdAt: "2026-08-01",
       memberIds: ["u1", "u3"],
       quickDefault: 100,
     },
@@ -30,6 +32,7 @@ export const seedData = {
       title: "Concert & Festival Tickets",
       targetAmount: 6500, // Contributed: 6,500 (100%)
       targetDate: "2026-09-05",
+      createdAt: "2026-08-08",
       memberIds: ["u2", "u4", "u5"],
       quickDefault: 100,
     },
@@ -40,6 +43,7 @@ export const seedData = {
       title: "Diani trip",
       targetAmount: 40000, // Contributed: 23,000
       targetDate: null,
+      createdAt: "2026-07-01",
       memberIds: ["u1", "u2", "u3"],
       quickDefault: 100,
     },
@@ -48,6 +52,7 @@ export const seedData = {
       title: "Emergency fund",
       targetAmount: 20000, // Contributed: 10,000
       targetDate: null,
+      createdAt: "2026-06-01",
       memberIds: ["u2"],
       quickDefault: 100,
     },
@@ -56,6 +61,7 @@ export const seedData = {
       title: "New laptop",
       targetAmount: 60000, // Contributed: 25,000
       targetDate: "2026-12-01",
+      createdAt: "2026-06-15",
       memberIds: ["u3"],
       quickDefault: 100,
     },
@@ -64,6 +70,7 @@ export const seedData = {
       title: "Rent buffer",
       targetAmount: 10000, // Contributed: 5,000
       targetDate: null,
+      createdAt: "2026-07-01",
       memberIds: ["u2"],
       quickDefault: 100,
     },
@@ -72,6 +79,7 @@ export const seedData = {
       title: "Naivasha Getaway",
       targetAmount: 25000, // Contributed: 12,000
       targetDate: "2026-10-15",
+      createdAt: "2026-08-05",
       memberIds: ["u1", "u4", "u5"],
       quickDefault: 500,
     },
@@ -80,6 +88,7 @@ export const seedData = {
       title: "Home Studio Setup",
       targetAmount: 18000, // Contributed: 10,000
       targetDate: "2026-11-20",
+      createdAt: "2026-07-15",
       memberIds: ["u4"],
       quickDefault: 200,
     },
@@ -88,6 +97,7 @@ export const seedData = {
       title: "PS5 Console",
       targetAmount: 70000, // Contributed: 35,000
       targetDate: "2026-12-25",
+      createdAt: "2026-07-10",
       memberIds: ["u1", "u3"],
       quickDefault: 500,
     },
