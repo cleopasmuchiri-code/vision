@@ -1,16 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useApp } from "../../context/AppContext";
 import VisionCard from "./VisionCard";
 import { getVisionProgress } from "../../utils/getVisionProgress";
-
+import { useLocation, useNavigate } from "react-router-dom";
 import VisionForm from "../Forms/VisionForm";
 
 const Visions = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [isCreating, setIsCreating] = useState(false);
+
+  useEffect(() => {
+    if (location.state?.openCreate) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setIsCreating(true);
+      navigate(".", { replace: true, state: {} });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.state]);
+
   const { visions, contributions, currentUserId } = useApp();
 
   // 1. State to track current filter selection
   const [filter, setFilter] = useState("all"); // "all" | "active" | "completed"
-  const [isCreating, setIsCreating] = useState();
+
   // 2. Filter visions where current user is a member
   const userVisions = visions.filter((vision) =>
     vision.memberIds.includes(currentUserId),
@@ -36,9 +49,7 @@ const Visions = () => {
   ];
 
   function closeVisionModal() {
-    if (isCreating) {
-      setIsCreating(false);
-    }
+    setIsCreating(false);
   }
 
   return (

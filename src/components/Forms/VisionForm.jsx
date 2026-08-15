@@ -1,29 +1,27 @@
 import { useState, useEffect } from "react";
 import { useApp } from "../../context/AppContext";
-import { useNavigate } from "react-router-dom";
 
 const emptyFormData = {
   title: "",
-  target: "",
+  targetAmount: "",
   targetDate: "",
   quickDefault: "",
-  memberIds: ["us1"],
+  memberIds: [],
 };
 const VisionForm = ({ selectedVision, closeVisionModal }) => {
   const { createVision, editVision, currentUserId, users } = useApp();
   const [formData, setFormData] = useState(emptyFormData);
   const [usersVisible, setUsersVisible] = useState(false);
 
-  const navigate = useNavigate();
   useEffect(() => {
     if (selectedVision) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData({
         title: selectedVision.title || "",
-        target: selectedVision.target || "",
+        targetAmount: selectedVision.targetAmount || "",
         targetDate: selectedVision.targetDate || "",
         quickDefault: selectedVision.quickDefault || "",
-        memberIds: selectedVision.membersIds || [currentUserId],
+        memberIds: selectedVision.memberIds || [currentUserId],
       });
     } else {
       setFormData(emptyFormData);
@@ -48,11 +46,8 @@ const VisionForm = ({ selectedVision, closeVisionModal }) => {
       createVision({ ...formData, id: crypto.randomUUID() });
     }
 
-    console.log("form data is", formData);
     setFormData(emptyFormData);
-
-    // navigate back to visions
-    navigate("/visions");
+    closeVisionModal(); // instead of navigate("/visions")
   }
 
   function justMe() {
@@ -86,6 +81,7 @@ const VisionForm = ({ selectedVision, closeVisionModal }) => {
             value={formData.title}
             name="title"
             type="text"
+            placeholder="Buy GTA VI"
             required
             className="mt-1 bg-bg w-full p-2 px-4 rounded-2xl text-text placeholder:text-text-muted border border-text-muted/40 focus:border-primary focus:outline-0"
           />
@@ -96,10 +92,11 @@ const VisionForm = ({ selectedVision, closeVisionModal }) => {
           </label>
           <input
             onChange={handleChange}
-            value={formData.target}
-            name="target"
+            value={formData.targetAmount}
+            name="targetAmount"
             type="number"
             required
+            placeholder="12,000"
             className="mt-1 bg-bg w-full p-2 px-4 rounded-2xl text-text placeholder:text-text-muted border border-text-muted/40 focus:border-primary focus:outline-0"
           />
         </div>
@@ -112,6 +109,7 @@ const VisionForm = ({ selectedVision, closeVisionModal }) => {
             value={formData.targetDate}
             name="targetDate"
             type="date"
+            placeholder="11/20/2026"
             className="mt-1 bg-bg w-full p-2 px-4 rounded-2xl text-text placeholder:text-text-muted border border-text-muted/40 focus:border-primary focus:outline-0"
           />
         </div>
@@ -125,6 +123,7 @@ const VisionForm = ({ selectedVision, closeVisionModal }) => {
             value={formData.quickDefault}
             name="quickDefault"
             type="number"
+            placeholder="1500"
             className="my-1 bg-bg w-full p-2 px-4 rounded-2xl text-text placeholder:text-text-muted border border-text-muted/40 focus:border-primary focus:outline-0"
           />
           <p className="text-text-muted text-sm">

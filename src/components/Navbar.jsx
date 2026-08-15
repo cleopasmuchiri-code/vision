@@ -26,7 +26,7 @@ const Navbar = () => {
 
   const initials = getUserInitials(users, currentUserId);
   return (
-    <div className="bg-bg fixed top-0 w-full flex justify-center items-center  border-b border-b-text-muted/30">
+    <div className="z-10000000000 bg-bg fixed top-0 w-full flex justify-center items-center  border-b border-b-text-muted/30">
       <nav className="w-full lg:w-[60%] text-text-muted  flex justify-between items-center pt-4 pb-5 px-4">
         {/* logo */}
         <Link to="/" className="text-lg font-bold text-text">

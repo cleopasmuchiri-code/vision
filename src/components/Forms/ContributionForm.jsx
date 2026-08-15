@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useApp } from "../../context/AppContext";
 
 const emptyFormData = {
-  amount: 0,
+  amount: "",
   date: "",
 };
 
@@ -73,6 +73,7 @@ const ContributionForm = ({
             value={formData.amount}
             name="amount"
             type="number"
+            placeholder="50"
             className="mt-1 bg-bg w-full p-2 px-4 rounded-2xl text-text placeholder:text-text-muted border border-text-muted/40 focus:border-primary focus:outline-0"
           />
         </div>

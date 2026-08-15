@@ -7,8 +7,15 @@ import VisionCard from "./Vision/VisionCard";
 import { getVisionProgress } from "../utils/getVisionProgress";
 import { Link } from "react-router-dom";
 import { Flame } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
+  function handleNewVisionClick() {
+    navigate("/visions", { state: { openCreate: true } });
+  }
+
   const { currentUserId, contributions, visions } = useApp();
 
   const userContributions = contributions.filter(
@@ -34,18 +41,19 @@ const LandingPage = () => {
 
   return (
     <main className="flex flex-col gap-8">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-end">
         <div className=" text-text">
           <p className="text-sm text-text-muted">Total saved</p>
           <h2 className="text-4xl font-extrabold text-text">Ksh {total}</h2>
         </div>
 
-        <Link to="/visions/add" className="text-center text-primary-light ">
-          <button className="cursor-pointer flex justify-center items-center gap-3 bg-primary hover:bg-primary-hover px-4 py-3 rounded-full">
-            <p>+</p>
-            <p className="font-bold">New Vision</p>
-          </button>
-        </Link>
+        <button
+          onClick={handleNewVisionClick}
+          className=" text-center text-primary-light cursor-pointer flex justify-center items-center gap-3 bg-primary hover:bg-primary-hover px-6 py-3 rounded-full"
+        >
+          <p>+</p>
+          <p className="font-bold">New Vision</p>
+        </button>
       </div>
 
       <div className="flex justify-between items-center gap-8">

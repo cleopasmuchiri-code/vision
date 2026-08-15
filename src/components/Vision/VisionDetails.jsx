@@ -61,6 +61,7 @@ const VisionDetails = () => {
       setIsEditing(false);
     }
   }
+
   return (
     <>
       {isEditing ? (
@@ -128,15 +129,33 @@ const VisionDetails = () => {
             </div>
           </div>
 
-          <div className="rounded-xl overflow-hidden shadow border border-text-muted/30">
-            {visionContributions.map((contribution) => (
-              <HistoryCard
-                key={contribution.id}
-                contribution={contribution}
-                editContributionToggle={handleSelectedContributionClick}
-              />
-            ))}
-          </div>
+          {visionContributions.length <= 0 ? (
+            <div className="w-full h-full grid place-items-center gap-8">
+              <h1 className="text-accent-warm text-xl">
+                Not contributions added
+              </h1>
+              <div className="text-center">
+                <QuickAddContribution
+                  quickDefault={vision.quickDefault}
+                  visionId={id}
+                />
+
+                <p className="pt-2 text-text-muted text-xs">
+                  Make first contribution
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-xl overflow-hidden shadow border border-text-muted/30">
+              {visionContributions.map((contribution) => (
+                <HistoryCard
+                  key={contribution.id}
+                  contribution={contribution}
+                  editContributionToggle={handleSelectedContributionClick}
+                />
+              ))}
+            </div>
+          )}
 
           {addCustomContribution && (
             <div className="fixed inset-0 z-10 grid place-items-center h-screen w-screen bg-white/10 ">
